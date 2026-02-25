@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain
+
+Method: POST
+Path: /submit
+Content-Type: application/json
+Body: {"name":"Pop","mission":"banana"}
