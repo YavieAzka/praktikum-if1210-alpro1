@@ -1,0 +1,20 @@
+# Tipe data primitif dalam bahasa C
+(Primitif: tipe data yang tidak dibentuk dari tipe data lain)
+1. int -> bilangan bulat (-2^31 -- 2^31) 
+2. boolean -> true/false; 1/0
+3. float -> bilangan real (3,14; 2,72;...)
+4. char -> karakter ('a'; '1'; '!')
+        1 != '1'
+      (int)  (char)
+
+* string -> kumpulan karakter ("budi"; "08121343454")
+NOTES: tidak ada tipe data primitif string di C
+C: string = array of character 
+
+
+kasus spesifik: long -> integer lebih besar
+                double -> float yang lebih presisi
+
+# Introduction to C
+[Semua variabel yang dipakai harus dideklarasikan terlebih dahulu]
+1. Input
