@@ -1,3 +1,5 @@
+#ifndef BARANG_H
+#define BARANG_H
 /**
  * Sistem Simulasi Transaksi Gudang
  * * Asumsi: 
@@ -68,3 +70,4 @@ void cekStokKritis(Barang daftarBarang[], int jumlahBarang);
  * @persentaseDiskon: nilai desimal diskon (0.0 hingga 1.0)
  */
 void berikanDiskonMassal(Barang daftarBarang[], int jumlahBarang, float persentaseDiskon);
+#endif

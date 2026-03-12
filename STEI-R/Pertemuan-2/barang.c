@@ -1,24 +1,4 @@
-/**
- * Sistem Simulasi Transaksi Gudang
- * * Asumsi: 
- * Data Array of Struct "Barang" sudah diinisialisasi di fungsi main().
- * Tidak perlu ada proses membaca file atau memotong string (strtok).
- * Fokus pada manipulasi angka dan logika kondisional.
- */
-
-#include <stdio.h>
-#include <string.h>
-
-#define MAX_ITEMS 50
-
-// Struktur data untuk menyimpan informasi barang di gudang
-typedef struct {
-    int id;
-    char nama[50];
-    int stok;
-    int batasMinimum;  // Batas peringatan jika stok menipis
-    float hargaSatuan;
-} Barang;
+#include "barang.h"
 
 /**
  * 1. Prosedur untuk memproses perubahan jumlah stok barang.
@@ -32,7 +12,20 @@ typedef struct {
  * @jumlah: kuantitas barang yang ditransaksikan
  * @jenisTransaksi: 1 untuk masuk, 0 untuk keluar
  */
-void prosesTransaksi(Barang *b, int jumlah, int jenisTransaksi);
+void prosesTransaksi(Barang *b, int jumlah, int jenisTransaksi){
+    if(jenisTransaksi == 1){
+        b->stok = b->stok + jumlah;
+    }
+    if(jenisTransaksi == 0){
+        if(b->stok < jumlah){
+            b->stok = 0;
+            printf("Peringatan: Stok %s tidak mencukupi!\n", b->nama);
+        }
+        else{
+            b->stok = b->stok - jumlah;
+        }
+    }
+}
 
 /**
  * 2. Fungsi untuk menghitung total nilai uang (aset) dari seluruh barang di gudang.
@@ -43,7 +36,13 @@ void prosesTransaksi(Barang *b, int jumlah, int jenisTransaksi);
  * @jumlahBarang: total macam barang di dalam array
  * @return: total nilai aset keseluruhan (float)
  */
-float hitungTotalAset(Barang daftarBarang[], int jumlahBarang);
+float hitungTotalAset(Barang daftarBarang[], int jumlahBarang){
+    float total = 0;
+    for(int i = 0; i < jumlahBarang; i++){
+        total += daftarBarang[i].stok * daftarBarang[i].hargaSatuan;
+    }
+    return total;
+}
 
 /**
  * 3. Prosedur untuk melakukan inspeksi barang yang hampir habis.
@@ -55,7 +54,13 @@ float hitungTotalAset(Barang daftarBarang[], int jumlahBarang);
  * * @daftarBarang: array of struct Barang
  * @jumlahBarang: total macam barang di dalam array
  */
-void cekStokKritis(Barang daftarBarang[], int jumlahBarang);
+void cekStokKritis(Barang daftarBarang[], int jumlahBarang){
+    for(int i = 0; i < jumlahBarang; i++){
+        if(daftarBarang[i].stok <= daftarBarang[i].batasMinimum){
+            printf("ID-%d %s - Sisa Stok: %d (KRITIS!)\n", daftarBarang[i].id, daftarBarang[i].nama, daftarBarang[i].stok);
+        }
+    }
+}
 
 /**
  * 4. Prosedur untuk memotong harga jual semua barang (Diskon Cuci Gudang).
@@ -67,4 +72,9 @@ void cekStokKritis(Barang daftarBarang[], int jumlahBarang);
  * @jumlahBarang: total macam barang di dalam array
  * @persentaseDiskon: nilai desimal diskon (0.0 hingga 1.0)
  */
-void berikanDiskonMassal(Barang daftarBarang[], int jumlahBarang, float persentaseDiskon);
+void berikanDiskonMassal(Barang daftarBarang[], int jumlahBarang, float persentaseDiskon){
+    for(int i = 0; i < jumlahBarang; i++){
+        daftarBarang[i].hargaSatuan = daftarBarang[i].hargaSatuan * (1 - persentaseDiskon);
+    }
+
+}
